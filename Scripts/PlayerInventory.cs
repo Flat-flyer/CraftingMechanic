@@ -8,7 +8,9 @@ public class PlayerInventory : MonoBehaviour
 
     public Item TestItem;
     public Item TestItemTwo;
-    private float PlayerCurrency = 0f;
+    public Item Sword;
+    public Item Pick;
+    public float PlayerCurrency = 0f;
     public Text DisplayedCurrency;
     private SpritesList SpriteRef;
     
@@ -30,14 +32,31 @@ public class PlayerInventory : MonoBehaviour
         TestItemTwo.HQValue = 500f;
         TestItemTwo.ItemImage = SpriteRef.Sprite[1];
         TestItemTwo.IsHighQuality = false;
+        Sword = GameObject.Find("SwordItem").GetComponent<Item>();
+        Sword.ItemName = "Wooden Sword";
+        Sword.ItemMaxAmount = 10f;
+        Sword.ItemAmount = 0f;
+        Sword.Value = 750f;
+        Sword.HQValue = 1500f;
+        Sword.ItemImage = SpriteRef.Sprite[2];
+        Sword.IsHighQuality = false;
+        Pick = GameObject.Find("PickItem").GetComponent<Item>();
+        Pick.ItemName = "Pickaxe";
+        Pick.ItemMaxAmount = 10f;
+        Pick.ItemAmount = 0f;
+        Pick.Value = 900f;
+        Pick.HQValue = 2000f;
+        Pick.ItemImage = SpriteRef.Sprite[3];
+        Pick.IsHighQuality = false;
 
-        
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        DisplayedCurrency.text = "X " + PlayerCurrency;
     }
 
     public void AddQuantityToItem(Item item, float addedAmount)
@@ -52,14 +71,13 @@ public class PlayerInventory : MonoBehaviour
         Debug.Log("Quantity of " + TestItemTwo.ItemName + " is " + TestItemTwo.ItemAmount);
     }
 
-    public void SellItem (Item item, float ReducedAmount)
+    public void SellItem (Item item)
     {
 
         if (item.ItemAmount > 0)
         {
-            item.ItemAmount = item.ItemAmount - ReducedAmount;
+            RemoveItem(item, 1);
             PlayerCurrency = PlayerCurrency + item.Value;
-            DisplayedCurrency.text = "X " + PlayerCurrency;
             Debug.Log("Quantity of " + item.ItemName + " is " + item.ItemAmount);
 
         }
@@ -67,5 +85,15 @@ public class PlayerInventory : MonoBehaviour
         {
             item.ItemAmount = 0;
         }
+    }
+
+    public void RemoveItem (Item item, float AmountRemoved)
+    {
+        item.ItemAmount = item.ItemAmount - AmountRemoved;
+    }
+
+    public void RemoveGold (float GoldRemoved)
+    {
+        PlayerCurrency = PlayerCurrency - GoldRemoved;
     }
 }

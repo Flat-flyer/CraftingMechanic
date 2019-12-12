@@ -26,7 +26,7 @@ public class ItemSeller : MonoBehaviour
 
     public void SellItem()
     {
-        Inventory.SellItem(SoldItem, 1);
+        Inventory.SellItem(SoldItem);
 
     }
 }

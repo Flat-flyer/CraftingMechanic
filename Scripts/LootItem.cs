@@ -8,6 +8,8 @@ public class LootItem : MonoBehaviour
     private bool ActivelyLooting = false;
     private PlayerInventory Player;
     private int ItemRoll;
+    private float AddedQuantity = 0;
+    public float BonusQuantity = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +27,13 @@ public class LootItem : MonoBehaviour
             Debug.Log ("Player Attempted to Loot");
             if (ItemRoll >= 0 && ItemRoll <= 75)
             {
-                Player.AddQuantityToItem(Player.TestItem, 4);
+                AddedQuantity = 4 + BonusQuantity;
+                Player.AddQuantityToItem(Player.TestItem, AddedQuantity);
             }
             if (ItemRoll >= 76 && ItemRoll <= 100)
             {
-                Player.AddQuantityToItem(Player.TestItemTwo, 2);
+                AddedQuantity = 2 + BonusQuantity;
+                Player.AddQuantityToItem(Player.TestItemTwo, AddedQuantity);
             }
             ActivelyLooting = false;
         }
